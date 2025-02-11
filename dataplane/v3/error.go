@@ -39,3 +39,11 @@ type UnknownError struct {
 func (e *UnknownError) Error() string {
 	return e.Message
 }
+
+type InternalError struct {
+	Message string
+}
+
+func (e *InternalError) Error() string {
+	return e.Message
+}
