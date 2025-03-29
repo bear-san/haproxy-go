@@ -69,11 +69,7 @@ func (c Client) ListServer(backend string, transactionId string) ([]Server, erro
 
 func (c Client) ReplaceServer(backend string, transactionId string, b Server) (*Server, error) {
 	apiUrl := fmt.Sprintf(
-<<<<<<< HEAD
-		"%s/v3/services/haproxy/configuration/backends/%s/servers?transaction_id=%s",
-=======
-		"%s/services/haproxy/configuration/backends/%s/servers/%s?transaction_id=%s",
->>>>>>> origin/main
+		"%s/v3/services/haproxy/configuration/backends/%s/servers/%s?transaction_id=%s",
 		c.BaseUrl,
 		backend,
 		*b.Name,
