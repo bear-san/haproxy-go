@@ -18,7 +18,7 @@ type Bind struct {
 
 func (c Client) AddBind(frontend string, transactionId string, b Bind) (*Bind, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
 		c.BaseUrl,
 		frontend,
 		transactionId,
@@ -34,7 +34,7 @@ func (c Client) AddBind(frontend string, transactionId string, b Bind) (*Bind, e
 
 func (c Client) GetBind(name string, frontend string, transactionId string) (*Bind, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/frontends/%s/binds/%s?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s/binds/%s?transaction_id=%s",
 		c.BaseUrl,
 		frontend,
 		name,
@@ -46,7 +46,7 @@ func (c Client) GetBind(name string, frontend string, transactionId string) (*Bi
 
 func (c Client) ListBind(frontend string, transactionId string) ([]Bind, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
 		c.BaseUrl,
 		frontend,
 		transactionId,
@@ -71,7 +71,7 @@ func (c Client) ListBind(frontend string, transactionId string) ([]Bind, error) 
 
 func (c Client) ReplaceBind(frontend string, transactionId string, b Bind) (*Bind, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
 		c.BaseUrl,
 		frontend,
 		transactionId,
@@ -87,7 +87,7 @@ func (c Client) ReplaceBind(frontend string, transactionId string, b Bind) (*Bin
 
 func (c Client) DeleteBind(name string, frontend string, transactionId string) error {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/frontends/%s/binds/%s?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s/binds/%s?transaction_id=%s",
 		c.BaseUrl,
 		frontend,
 		name,

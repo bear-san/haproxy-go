@@ -30,7 +30,7 @@ type Backend struct {
 }
 
 func (c Client) AddBackend(f Backend, transactionId string) (*Backend, error) {
-	apiUrl := fmt.Sprintf("%s/services/haproxy/configuration/backends?transaction_id=%s", c.BaseUrl, transactionId)
+	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/configuration/backends?transaction_id=%s", c.BaseUrl, transactionId)
 
 	body, err := json.Marshal(f)
 	if err != nil {
@@ -44,7 +44,7 @@ func (c Client) AddBackend(f Backend, transactionId string) (*Backend, error) {
 
 func (c Client) GetBackend(name string, transactionId string) (*Backend, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/backends/%s?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/backends/%s?transaction_id=%s",
 		c.BaseUrl,
 		name,
 		transactionId,
@@ -54,7 +54,7 @@ func (c Client) GetBackend(name string, transactionId string) (*Backend, error) 
 }
 
 func (c Client) ListBackend(transactionId string) ([]Backend, error) {
-	apiUrl := fmt.Sprintf("%s/services/haproxy/configuration/backends?transaction_id=%s", c.BaseUrl, transactionId)
+	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/configuration/backends?transaction_id=%s", c.BaseUrl, transactionId)
 
 	resTxt, err := c.callApi(apiUrl, "GET", nil)
 	if err != nil {
@@ -75,7 +75,7 @@ func (c Client) ListBackend(transactionId string) ([]Backend, error) {
 
 func (c Client) ReplaceBackend(name string, f Backend, transactionId string) (*Backend, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/backends/%s?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/backends/%s?transaction_id=%s",
 		c.BaseUrl,
 		name,
 		transactionId,
@@ -91,7 +91,7 @@ func (c Client) ReplaceBackend(name string, f Backend, transactionId string) (*B
 
 func (c Client) DeleteBackend(name string, transactionId string) error {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/backends/%s?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/backends/%s?transaction_id=%s",
 		c.BaseUrl,
 		name,
 		transactionId,

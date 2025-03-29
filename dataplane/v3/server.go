@@ -16,7 +16,7 @@ type Server struct {
 
 func (c Client) AddServer(backend string, transactionId string, b Server) (*Server, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/backends/%s/servers?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/backends/%s/servers?transaction_id=%s",
 		c.BaseUrl,
 		backend,
 		transactionId,
@@ -32,7 +32,7 @@ func (c Client) AddServer(backend string, transactionId string, b Server) (*Serv
 
 func (c Client) GetServer(name string, backend string, transactionId string) (*Server, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/backends/%s/servers/%s?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/backends/%s/servers/%s?transaction_id=%s",
 		c.BaseUrl,
 		backend,
 		name,
@@ -44,7 +44,7 @@ func (c Client) GetServer(name string, backend string, transactionId string) (*S
 
 func (c Client) ListServer(backend string, transactionId string) ([]Server, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/backends/%s/servers?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/backends/%s/servers?transaction_id=%s",
 		c.BaseUrl,
 		backend,
 		transactionId,
@@ -69,7 +69,7 @@ func (c Client) ListServer(backend string, transactionId string) ([]Server, erro
 
 func (c Client) ReplaceServer(backend string, transactionId string, b Server) (*Server, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/backends/%s/servers?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/backends/%s/servers?transaction_id=%s",
 		c.BaseUrl,
 		backend,
 		transactionId,
@@ -85,7 +85,7 @@ func (c Client) ReplaceServer(backend string, transactionId string, b Server) (*
 
 func (c Client) DeleteServer(name string, backend string, transactionId string) error {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/backends/%s/servers/%s?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/backends/%s/servers/%s?transaction_id=%s",
 		c.BaseUrl,
 		backend,
 		name,

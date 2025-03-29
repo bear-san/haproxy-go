@@ -22,7 +22,7 @@ type Frontend struct {
 }
 
 func (c Client) AddFrontend(f Frontend, transactionId string) (*Frontend, error) {
-	apiUrl := fmt.Sprintf("%s/services/haproxy/configuration/frontends?transaction_id=%s", c.BaseUrl, transactionId)
+	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/configuration/frontends?transaction_id=%s", c.BaseUrl, transactionId)
 
 	body, err := json.Marshal(f)
 	if err != nil {
@@ -34,7 +34,7 @@ func (c Client) AddFrontend(f Frontend, transactionId string) (*Frontend, error)
 
 func (c Client) GetFrontend(name string, transactionId string) (*Frontend, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/frontends/%s?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s?transaction_id=%s",
 		c.BaseUrl,
 		name,
 		transactionId,
@@ -44,7 +44,7 @@ func (c Client) GetFrontend(name string, transactionId string) (*Frontend, error
 }
 
 func (c Client) ListFrontend(transactionId string) ([]Frontend, error) {
-	apiUrl := fmt.Sprintf("%s/services/haproxy/configuration/frontends?transaction_id=%s", c.BaseUrl, transactionId)
+	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/configuration/frontends?transaction_id=%s", c.BaseUrl, transactionId)
 
 	resTxt, err := c.callApi(apiUrl, "GET", nil)
 	if err != nil {
@@ -65,7 +65,7 @@ func (c Client) ListFrontend(transactionId string) ([]Frontend, error) {
 
 func (c Client) ReplaceFrontend(name string, f Frontend, transactionId string) (*Frontend, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/frontends/%s?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s?transaction_id=%s",
 		c.BaseUrl,
 		name,
 		transactionId,
@@ -81,7 +81,7 @@ func (c Client) ReplaceFrontend(name string, f Frontend, transactionId string) (
 
 func (c Client) DeleteFrontend(name string, transactionId string) error {
 	apiUrl := fmt.Sprintf(
-		"%s/services/haproxy/configuration/frontends/%s?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s?transaction_id=%s",
 		c.BaseUrl,
 		name,
 		transactionId,
