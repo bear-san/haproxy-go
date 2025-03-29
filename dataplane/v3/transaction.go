@@ -22,7 +22,7 @@ type Transaction struct {
 }
 
 func (c Client) GetVersion() (*int, error) {
-	apiUrl := fmt.Sprintf("%s/services/haproxy/configuration/version", c.BaseUrl)
+	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/configuration/version", c.BaseUrl)
 	req, err := http.NewRequest("GET", apiUrl, nil)
 	if err != nil {
 		return nil, &InternalError{Message: err.Error()}
@@ -51,7 +51,7 @@ func (c Client) GetVersion() (*int, error) {
 }
 
 func (c Client) CreateTransaction(version int) (*Transaction, error) {
-	apiUrl := fmt.Sprintf("%s/services/haproxy/transactions?version=%d", c.BaseUrl, version)
+	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/transactions?version=%d", c.BaseUrl, version)
 
 	req, err := http.NewRequest("POST", apiUrl, nil)
 	if err != nil {
@@ -64,7 +64,7 @@ func (c Client) CreateTransaction(version int) (*Transaction, error) {
 }
 
 func (c Client) GetTransaction(id string) (*Transaction, error) {
-	apiUrl := fmt.Sprintf("%s/services/haproxy/transactions/%s", c.BaseUrl, id)
+	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/transactions/%s", c.BaseUrl, id)
 
 	req, err := http.NewRequest("POST", apiUrl, nil)
 	if err != nil {
@@ -77,7 +77,7 @@ func (c Client) GetTransaction(id string) (*Transaction, error) {
 }
 
 func (c Client) CommitTransaction(id string) (*Transaction, error) {
-	apiUrl := fmt.Sprintf("%s/services/haproxy/transactions/%s", c.BaseUrl, id)
+	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/transactions/%s", c.BaseUrl, id)
 
 	req, err := http.NewRequest("PUT", apiUrl, nil)
 	if err != nil {
@@ -90,7 +90,7 @@ func (c Client) CommitTransaction(id string) (*Transaction, error) {
 }
 
 func (c Client) CloseTransaction(id string) (*string, error) {
-	apiUrl := fmt.Sprintf("%s/services/haproxy/transactions/%s", c.BaseUrl, id)
+	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/transactions/%s", c.BaseUrl, id)
 	res, err := c.callApi(apiUrl, "DELETE", nil)
 	if err != nil {
 		return nil, err
