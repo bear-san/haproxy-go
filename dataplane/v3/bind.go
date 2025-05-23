@@ -16,13 +16,22 @@ type Bind struct {
 	V6Only  *bool   `json:"v6only,omitempty"`
 }
 
-func (c Client) AddBind(frontend string, transactionId string, b Bind) (*Bind, error) {
+func (c Client) AddBind(frontend string, b Bind, opts ...option) (*Bind, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/v3/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s/binds",
 		c.BaseUrl,
 		frontend,
-		transactionId,
 	)
+
+	op := &HAProxyOpts{}
+	for _, o := range opts {
+		o(op)
+	}
+	if op.TransactionID != "" {
+		apiUrl += fmt.Sprintf("?transaction_id=%s", op.TransactionID)
+	} else {
+		return nil, &BadRequestError{Message: "transaction_id is required"}
+	}
 
 	reqTxt, err := json.Marshal(b)
 	if err != nil {
@@ -32,25 +41,40 @@ func (c Client) AddBind(frontend string, transactionId string, b Bind) (*Bind, e
 	return c.executeApiReturnsBind(apiUrl, "POST", bytes.NewReader(reqTxt))
 }
 
-func (c Client) GetBind(name string, frontend string, transactionId string) (*Bind, error) {
+func (c Client) GetBind(name string, frontend string, opts ...option) (*Bind, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/v3/services/haproxy/configuration/frontends/%s/binds/%s?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s/binds/%s",
 		c.BaseUrl,
 		frontend,
 		name,
-		transactionId,
 	)
+
+	op := &HAProxyOpts{}
+	for _, o := range opts {
+		o(op)
+	}
+	if op.TransactionID != "" {
+		apiUrl += fmt.Sprintf("?transaction_id=%s", op.TransactionID)
+	}
 
 	return c.executeApiReturnsBind(apiUrl, "GET", nil)
 }
 
-func (c Client) ListBind(frontend string, transactionId string) ([]Bind, error) {
+func (c Client) ListBind(frontend string, opts ...option) ([]Bind, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/v3/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s/binds",
 		c.BaseUrl,
 		frontend,
-		transactionId,
 	)
+
+	op := &HAProxyOpts{}
+	for _, o := range opts {
+		o(op)
+	}
+
+	if op.TransactionID != "" {
+		apiUrl += fmt.Sprintf("?transaction_id=%s", op.TransactionID)
+	}
 
 	resTxt, err := c.callApi(apiUrl, "GET", nil)
 	if err != nil {
@@ -69,13 +93,23 @@ func (c Client) ListBind(frontend string, transactionId string) ([]Bind, error) 
 	return resResult, nil
 }
 
-func (c Client) ReplaceBind(frontend string, transactionId string, b Bind) (*Bind, error) {
+func (c Client) ReplaceBind(frontend string, b Bind, opts ...option) (*Bind, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/v3/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s/binds",
 		c.BaseUrl,
 		frontend,
-		transactionId,
 	)
+
+	op := &HAProxyOpts{}
+	for _, o := range opts {
+		o(op)
+	}
+
+	if op.TransactionID != "" {
+		apiUrl += fmt.Sprintf("?transaction_id=%s", op.TransactionID)
+	} else {
+		return nil, &BadRequestError{Message: "transaction_id is required"}
+	}
 
 	reqTxt, err := json.Marshal(b)
 	if err != nil {
@@ -85,14 +119,24 @@ func (c Client) ReplaceBind(frontend string, transactionId string, b Bind) (*Bin
 	return c.executeApiReturnsBind(apiUrl, "PUT", bytes.NewReader(reqTxt))
 }
 
-func (c Client) DeleteBind(name string, frontend string, transactionId string) error {
+func (c Client) DeleteBind(name string, frontend string, opts ...option) error {
 	apiUrl := fmt.Sprintf(
-		"%s/v3/services/haproxy/configuration/frontends/%s/binds/%s?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s/binds/%s",
 		c.BaseUrl,
 		frontend,
 		name,
-		transactionId,
 	)
+
+	op := &HAProxyOpts{}
+	for _, o := range opts {
+		o(op)
+	}
+
+	if op.TransactionID != "" {
+		apiUrl += fmt.Sprintf("?transaction_id=%s", op.TransactionID)
+	} else {
+		return &BadRequestError{Message: "transaction_id is required"}
+	}
 
 	_, err := c.callApi(apiUrl, "DELETE", nil)
 

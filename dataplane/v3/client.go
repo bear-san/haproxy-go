@@ -16,6 +16,18 @@ type NormalResponse struct {
 	Message *string `json:"message,omitempty"`
 }
 
+type HAProxyOpts struct {
+	TransactionID string
+}
+
+type option func(opts *HAProxyOpts)
+
+func WithTransactionID(transactionId string) option {
+	return func(opts *HAProxyOpts) {
+		opts.TransactionID = transactionId
+	}
+}
+
 func (c Client) constructAuthorizationHeader() http.Header {
 	h := http.Header{}
 	h.Add("Authorization", fmt.Sprintf("Basic %s", c.Credential))
