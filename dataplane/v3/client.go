@@ -37,6 +37,7 @@ func (c Client) callApi(apiUrl string, method string, body io.Reader) ([]byte, e
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 
 	resTxt, err := io.ReadAll(res.Body)
 	if err != nil {
