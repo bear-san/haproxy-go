@@ -29,10 +29,10 @@ type Backend struct {
 	Mode    string          `json:"mode,omitempty"`
 }
 
-func (c Client) AddBackend(f Backend, transactionId string) (*Backend, error) {
+func (c Client) AddBackend(backend Backend, transactionId string) (*Backend, error) {
 	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/configuration/backends?transaction_id=%s", c.BaseUrl, transactionId)
 
-	body, err := json.Marshal(f)
+	body, err := json.Marshal(backend)
 	if err != nil {
 		return nil, &InvalidResponseError{
 			Message: err.Error(),
@@ -53,7 +53,7 @@ func (c Client) GetBackend(name string, transactionId string) (*Backend, error) 
 	return c.executeApiReturnsBackend(apiUrl, "GET", nil)
 }
 
-func (c Client) ListBackend(transactionId string) ([]Backend, error) {
+func (c Client) ListBackends(transactionId string) ([]Backend, error) {
 	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/configuration/backends?transaction_id=%s", c.BaseUrl, transactionId)
 
 	resTxt, err := c.callApi(apiUrl, "GET", nil)
@@ -73,7 +73,7 @@ func (c Client) ListBackend(transactionId string) ([]Backend, error) {
 	return resResult, nil
 }
 
-func (c Client) ReplaceBackend(name string, f Backend, transactionId string) (*Backend, error) {
+func (c Client) ReplaceBackend(name string, backend Backend, transactionId string) (*Backend, error) {
 	apiUrl := fmt.Sprintf(
 		"%s/v3/services/haproxy/configuration/backends/%s?transaction_id=%s",
 		c.BaseUrl,
@@ -81,7 +81,7 @@ func (c Client) ReplaceBackend(name string, f Backend, transactionId string) (*B
 		transactionId,
 	)
 
-	body, err := json.Marshal(f)
+	body, err := json.Marshal(backend)
 	if err != nil {
 		return nil, err
 	}

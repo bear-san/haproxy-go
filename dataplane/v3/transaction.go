@@ -35,6 +35,7 @@ func (c Client) GetVersion() (*int, error) {
 	if err != nil {
 		return nil, &InvalidResponseError{Message: err.Error()}
 	}
+	defer res.Body.Close()
 
 	result, err := io.ReadAll(res.Body)
 	if err != nil {
@@ -106,6 +107,7 @@ func (c Client) executeApiReturnsTransaction(r *http.Request) (*Transaction, err
 	if err != nil {
 		return nil, &InternalError{Message: err.Error()}
 	}
+	defer res.Body.Close()
 
 	resTxt, err := io.ReadAll(res.Body)
 	if err != nil {

@@ -14,7 +14,7 @@ type Server struct {
 	Port    *int    `json:"port,omitempty"`
 }
 
-func (c Client) AddServer(backend string, transactionId string, b Server) (*Server, error) {
+func (c Client) AddServer(backend string, transactionId string, server Server) (*Server, error) {
 	apiUrl := fmt.Sprintf(
 		"%s/v3/services/haproxy/configuration/backends/%s/servers?transaction_id=%s",
 		c.BaseUrl,
@@ -22,7 +22,7 @@ func (c Client) AddServer(backend string, transactionId string, b Server) (*Serv
 		transactionId,
 	)
 
-	reqTxt, err := json.Marshal(b)
+	reqTxt, err := json.Marshal(server)
 	if err != nil {
 		return nil, &InvalidResponseError{Message: err.Error()}
 	}
@@ -42,7 +42,7 @@ func (c Client) GetServer(name string, backend string, transactionId string) (*S
 	return c.executeApiReturnsServer(apiUrl, "GET", nil)
 }
 
-func (c Client) ListServer(backend string, transactionId string) ([]Server, error) {
+func (c Client) ListServers(backend string, transactionId string) ([]Server, error) {
 	apiUrl := fmt.Sprintf(
 		"%s/v3/services/haproxy/configuration/backends/%s/servers?transaction_id=%s",
 		c.BaseUrl,
@@ -67,16 +67,20 @@ func (c Client) ListServer(backend string, transactionId string) ([]Server, erro
 	return resResult, nil
 }
 
-func (c Client) ReplaceServer(backend string, transactionId string, b Server) (*Server, error) {
+func (c Client) ReplaceServer(backend string, transactionId string, server Server) (*Server, error) {
+	if server.Name == nil {
+		return nil, fmt.Errorf("server name is required")
+	}
+	
 	apiUrl := fmt.Sprintf(
 		"%s/v3/services/haproxy/configuration/backends/%s/servers/%s?transaction_id=%s",
 		c.BaseUrl,
 		backend,
-		*b.Name,
+		*server.Name,
 		transactionId,
 	)
 
-	reqTxt, err := json.Marshal(b)
+	reqTxt, err := json.Marshal(server)
 	if err != nil {
 		return nil, &InvalidResponseError{Message: err.Error()}
 	}
