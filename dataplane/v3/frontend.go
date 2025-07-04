@@ -21,10 +21,10 @@ type Frontend struct {
 	Mode           *string `json:"mode"`
 }
 
-func (c Client) AddFrontend(f Frontend, transactionId string) (*Frontend, error) {
+func (c Client) AddFrontend(frontend Frontend, transactionId string) (*Frontend, error) {
 	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/configuration/frontends?transaction_id=%s", c.BaseUrl, transactionId)
 
-	body, err := json.Marshal(f)
+	body, err := json.Marshal(frontend)
 	if err != nil {
 		return nil, &InvalidResponseError{Message: err.Error()}
 	}
@@ -63,7 +63,7 @@ func (c Client) ListFrontend(transactionId string) ([]Frontend, error) {
 	return resResult, nil
 }
 
-func (c Client) ReplaceFrontend(name string, f Frontend, transactionId string) (*Frontend, error) {
+func (c Client) ReplaceFrontend(name string, frontend Frontend, transactionId string) (*Frontend, error) {
 	apiUrl := fmt.Sprintf(
 		"%s/v3/services/haproxy/configuration/frontends/%s?transaction_id=%s",
 		c.BaseUrl,
@@ -71,7 +71,7 @@ func (c Client) ReplaceFrontend(name string, f Frontend, transactionId string) (
 		transactionId,
 	)
 
-	body, err := json.Marshal(f)
+	body, err := json.Marshal(frontend)
 	if err != nil {
 		return nil, &InvalidResponseError{Message: err.Error()}
 	}

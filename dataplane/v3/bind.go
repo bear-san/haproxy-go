@@ -16,7 +16,7 @@ type Bind struct {
 	V6Only  *bool   `json:"v6only,omitempty"`
 }
 
-func (c Client) AddBind(frontend string, transactionId string, b Bind) (*Bind, error) {
+func (c Client) AddBind(frontend string, transactionId string, bind Bind) (*Bind, error) {
 	apiUrl := fmt.Sprintf(
 		"%s/v3/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
 		c.BaseUrl,
@@ -24,7 +24,7 @@ func (c Client) AddBind(frontend string, transactionId string, b Bind) (*Bind, e
 		transactionId,
 	)
 
-	reqTxt, err := json.Marshal(b)
+	reqTxt, err := json.Marshal(bind)
 	if err != nil {
 		return nil, &InvalidResponseError{Message: err.Error()}
 	}
@@ -69,7 +69,7 @@ func (c Client) ListBind(frontend string, transactionId string) ([]Bind, error) 
 	return resResult, nil
 }
 
-func (c Client) ReplaceBind(frontend string, transactionId string, b Bind) (*Bind, error) {
+func (c Client) ReplaceBind(frontend string, transactionId string, bind Bind) (*Bind, error) {
 	apiUrl := fmt.Sprintf(
 		"%s/v3/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
 		c.BaseUrl,
@@ -77,7 +77,7 @@ func (c Client) ReplaceBind(frontend string, transactionId string, b Bind) (*Bin
 		transactionId,
 	)
 
-	reqTxt, err := json.Marshal(b)
+	reqTxt, err := json.Marshal(bind)
 	if err != nil {
 		return nil, &InvalidResponseError{Message: err.Error()}
 	}
