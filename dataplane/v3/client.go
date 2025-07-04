@@ -49,12 +49,17 @@ func (c Client) callApi(apiUrl string, method string, body io.Reader) ([]byte, e
 		return resTxt, &UnauthorizedError{Message: string(resTxt)}
 	case http.StatusBadRequest:
 		return resTxt, &BadRequestError{Message: string(resTxt)}
+	case http.StatusNotFound:
+		return resTxt, &NotFoundError{Message: string(resTxt)}
+	case http.StatusConflict:
+		return resTxt, &ConflictError{Message: string(resTxt)}
 	default:
-		break
-	}
-
-	if res.StatusCode/100 != 2 { // OK系のレスポンスならよし
-		return resTxt, &UnknownError{Message: string(resTxt)}
+		if res.StatusCode/100 != 2 { // 2xx status codes are successful
+			return resTxt, &UnknownError{
+				Message:    string(resTxt),
+				StatusCode: res.StatusCode,
+			}
+		}
 	}
 
 	return resTxt, nil
