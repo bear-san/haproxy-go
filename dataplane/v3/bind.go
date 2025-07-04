@@ -44,7 +44,7 @@ func (c Client) GetBind(name string, frontend string, transactionId string) (*Bi
 	return c.executeApiReturnsBind(apiUrl, "GET", nil)
 }
 
-func (c Client) ListBind(frontend string, transactionId string) ([]Bind, error) {
+func (c Client) ListBinds(frontend string, transactionId string) ([]Bind, error) {
 	apiUrl := fmt.Sprintf(
 		"%s/v3/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
 		c.BaseUrl,

@@ -53,7 +53,7 @@ func (c Client) GetBackend(name string, transactionId string) (*Backend, error) 
 	return c.executeApiReturnsBackend(apiUrl, "GET", nil)
 }
 
-func (c Client) ListBackend(transactionId string) ([]Backend, error) {
+func (c Client) ListBackends(transactionId string) ([]Backend, error) {
 	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/configuration/backends?transaction_id=%s", c.BaseUrl, transactionId)
 
 	resTxt, err := c.callApi(apiUrl, "GET", nil)

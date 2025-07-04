@@ -42,7 +42,7 @@ func (c Client) GetServer(name string, backend string, transactionId string) (*S
 	return c.executeApiReturnsServer(apiUrl, "GET", nil)
 }
 
-func (c Client) ListServer(backend string, transactionId string) ([]Server, error) {
+func (c Client) ListServers(backend string, transactionId string) ([]Server, error) {
 	apiUrl := fmt.Sprintf(
 		"%s/v3/services/haproxy/configuration/backends/%s/servers?transaction_id=%s",
 		c.BaseUrl,

@@ -43,7 +43,7 @@ func (c Client) GetFrontend(name string, transactionId string) (*Frontend, error
 	return c.executeApiReturnsFrontend(apiUrl, "GET", nil)
 }
 
-func (c Client) ListFrontend(transactionId string) ([]Frontend, error) {
+func (c Client) ListFrontends(transactionId string) ([]Frontend, error) {
 	apiUrl := fmt.Sprintf("%s/v3/services/haproxy/configuration/frontends?transaction_id=%s", c.BaseUrl, transactionId)
 
 	resTxt, err := c.callApi(apiUrl, "GET", nil)
