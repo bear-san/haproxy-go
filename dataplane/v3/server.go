@@ -68,6 +68,10 @@ func (c Client) ListServers(backend string, transactionId string) ([]Server, err
 }
 
 func (c Client) ReplaceServer(backend string, transactionId string, server Server) (*Server, error) {
+	if server.Name == nil {
+		return nil, fmt.Errorf("server name is required")
+	}
+	
 	apiUrl := fmt.Sprintf(
 		"%s/v3/services/haproxy/configuration/backends/%s/servers/%s?transaction_id=%s",
 		c.BaseUrl,
