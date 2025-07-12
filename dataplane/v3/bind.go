@@ -71,9 +71,10 @@ func (c Client) ListBinds(frontend string, transactionId string) ([]Bind, error)
 
 func (c Client) ReplaceBind(frontend string, transactionId string, bind Bind) (*Bind, error) {
 	apiUrl := fmt.Sprintf(
-		"%s/v3/services/haproxy/configuration/frontends/%s/binds?transaction_id=%s",
+		"%s/v3/services/haproxy/configuration/frontends/%s/binds/%s?transaction_id=%s",
 		c.BaseUrl,
 		frontend,
+		*bind.Name,
 		transactionId,
 	)
 
